@@ -1,0 +1,933 @@
+[
+    {
+        "id": "a3cc669196930997",
+        "type": "tab",
+        "label": "P1 MQTT",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "63f43d3fc3fee918",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L1 Aktiv Effekt Uttag",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "170b02fb43667b62",
+                "1fbb9e5cfc36d45d"
+            ]
+        ]
+    },
+    {
+        "id": "60598f66dfe874cf",
+        "type": "switch",
+        "z": "a3cc669196930997",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0:1.8.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:21.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:41.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:61.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:32.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:52.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:72.7.0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0:1.7.0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 8,
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "9773c7dbd584ce2d"
+            ],
+            [
+                "63f43d3fc3fee918"
+            ],
+            [
+                "75aa6383b2ba787a"
+            ],
+            [
+                "bb44e0d1dfa0e8a9"
+            ],
+            [
+                "3e106a461a2d3dda"
+            ],
+            [
+                "d58b27733f7a14c1"
+            ],
+            [
+                "2fb4c0d50359fbb3"
+            ],
+            [
+                "428b35fdf9772a48"
+            ]
+        ]
+    },
+    {
+        "id": "bebabd5eb3d10c26",
+        "type": "function",
+        "z": "a3cc669196930997",
+        "name": "Parse OBIS output",
+        "func": "const regex = /\\(|\\*|\\)/gm;\nconst str = msg.payload;\nconst result = str.split(regex);\nconst output = { \n    //value: parseFloat((result[1]).toFixed(1)),\n    value: parseFloat(parseFloat(result[1]).toFixed(1)),\n    unit: result[2]\n};\nreturn { \n    payload: output,\n    topic: [result[0]]\n    }\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 40,
+        "wires": [
+            [
+                "60598f66dfe874cf"
+            ]
+        ]
+    },
+    {
+        "id": "75aa6383b2ba787a",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L2 Aktiv Effekt Uttag",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "3303be96eb185fba",
+                "c59bc2c9bc26b10e"
+            ]
+        ]
+    },
+    {
+        "id": "bb44e0d1dfa0e8a9",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L3 Aktiv Effekt Uttag",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "3c2e3950bf444aac",
+                "1a3f048e24107266"
+            ]
+        ]
+    },
+    {
+        "id": "9773c7dbd584ce2d",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "Mätarställning Reaktiv Energi Uttag",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "8ee6578896a2adfa"
+            ]
+        ]
+    },
+    {
+        "id": "3e106a461a2d3dda",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L1 Fasspänning",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 320,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d58b27733f7a14c1",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L2 Fasspänning",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 320,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2fb4c0d50359fbb3",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "L3 Fasspänning",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 320,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41f7204701201afe",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "p1/energy/meter",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 840,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "8ee6578896a2adfa",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "Meeter int",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{ payload.value }}",
+        "output": "json",
+        "x": 640,
+        "y": 100,
+        "wires": [
+            [
+                "41f7204701201afe"
+            ]
+        ]
+    },
+    {
+        "id": "b5041f41bf8bf772",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "p1/energy/l1",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 830,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "170b02fb43667b62",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L1 int",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{ payload.value }}",
+        "output": "json",
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "702b380f5162c06c",
+                "b5041f41bf8bf772"
+            ]
+        ]
+    },
+    {
+        "id": "5af36f9b97d7a196",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "p1/energy/l2",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 830,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3303be96eb185fba",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L2 int",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": " {{ payload.value }}",
+        "output": "json",
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "702b380f5162c06c",
+                "5af36f9b97d7a196"
+            ]
+        ]
+    },
+    {
+        "id": "f9b1807ad6aa6dfc",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "p1/energy/l3",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 830,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3c2e3950bf444aac",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L3 int",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{ payload.value }}",
+        "output": "json",
+        "x": 630,
+        "y": 220,
+        "wires": [
+            [
+                "702b380f5162c06c",
+                "f9b1807ad6aa6dfc"
+            ]
+        ]
+    },
+    {
+        "id": "a5836002df02bfd1",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/sensor/p1_energy/config",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 820,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "514198b88c9ed431",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "Meeter Config",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"device\": {\n        \"identifiers\": [\n        \"landisenergy\"\n        ],\n        \"name\": \"Energy Meter\", \n        \"manufacturer\": \"Landis+Gyr\",\n        \"model\": \"Node red flow\",\n        \"sw_version\": \"2.0\"\n    },  \n    \"device_class\": \"energy\",\n    \"state_class\": \"total_increasing\",\n    \"name\": \"Energy consumption\",\n    \"state_topic\": \"p1/energy/meter\",\n    \"unit_of_measurement\": \"kWh\",\n    \"unique_id\": \"energyconsumption\",\n    \"platform\": \"mqtt\",\n    \"icon\": \"mdi:transmission-tower-export\"\n}",
+        "output": "json",
+        "x": 540,
+        "y": 580,
+        "wires": [
+            [
+                "a5836002df02bfd1"
+            ]
+        ]
+    },
+    {
+        "id": "0e4c3c66673a2ae9",
+        "type": "mqtt in",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/status",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "26516bc9a19c6fd2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 600,
+        "wires": [
+            [
+                "bd50eda224c1c3d1"
+            ]
+        ]
+    },
+    {
+        "id": "bd50eda224c1c3d1",
+        "type": "switch",
+        "z": "a3cc669196930997",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "online",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 660,
+        "wires": [
+            [
+                "514198b88c9ed431",
+                "2d7471c623dc07fe",
+                "385e477917a30c70",
+                "f42bbdbd1562ae12",
+                "dd532a620b6456da"
+            ]
+        ]
+    },
+    {
+        "id": "f42bbdbd1562ae12",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L3 config",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"device\": {\n        \"identifiers\": [\n        \"landisenergy\"\n        ],\n        \"name\": \"Energy Meter\", \n        \"manufacturer\": \"Landis+Gyr\",\n        \"model\": \"Node red flow\",\n        \"sw_version\": \"2.0\"\n    },  \n    \"device_class\": \"power\",\n    \"state_class\": \"measurement\",\n    \"name\": \"Energy phase 3\",\n    \"state_topic\": \"p1/energy/l3\",\n    \"unit_of_measurement\": \"kW\",\n    \"unique_id\": \"energyl3\",\n    \"platform\": \"mqtt\",\n    \"icon\": \"mdi:numeric-3\"\n}",
+        "output": "json",
+        "x": 520,
+        "y": 700,
+        "wires": [
+            [
+                "9072133bb4dd7744"
+            ]
+        ]
+    },
+    {
+        "id": "9072133bb4dd7744",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/sensor/p1_energyl3/config",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 820,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "735344c16ca3f4c1",
+        "type": "inject",
+        "z": "a3cc669196930997",
+        "name": "Trigger sensor update",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "online",
+        "payloadType": "str",
+        "x": 140,
+        "y": 660,
+        "wires": [
+            [
+                "bd50eda224c1c3d1"
+            ]
+        ]
+    },
+    {
+        "id": "2d7471c623dc07fe",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L1 config",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"device\": {\n        \"identifiers\": [\n        \"landisenergy\"\n        ],\n        \"name\": \"Energy Meter\", \n        \"manufacturer\": \"Landis+Gyr\",\n        \"model\": \"Node red flow\",\n        \"sw_version\": \"2.0\"\n    },  \n    \"device_class\": \"power\",\n    \"state_class\": \"measurement\",\n    \"name\": \"Energy phase 1\",\n    \"state_topic\": \"p1/energy/l1\",\n    \"unit_of_measurement\": \"kW\",\n    \"unique_id\": \"energyl1\",\n    \"platform\": \"mqtt\",\n    \"icon\": \"mdi:numeric-1\"\n}",
+        "output": "json",
+        "x": 520,
+        "y": 620,
+        "wires": [
+            [
+                "6bb11792dd274394"
+            ]
+        ]
+    },
+    {
+        "id": "6bb11792dd274394",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/sensor/p1_energyl1/config",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 820,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "385e477917a30c70",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "L2 config",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"device\": {\n        \"identifiers\": [\n        \"landisenergy\"\n        ],\n        \"name\": \"Energy Meter\", \n        \"manufacturer\": \"Landis+Gyr\",\n        \"model\": \"Node red flow\",\n        \"sw_version\": \"2.0\"\n    },  \n    \"device_class\": \"power\",\n    \"state_class\": \"measurement\",\n    \"name\": \"Energy phase 2\",\n    \"state_topic\": \"p1/energy/l2\",\n    \"unit_of_measurement\": \"kW\",\n    \"unique_id\": \"energyl2\",\n    \"platform\": \"mqtt\",\n    \"icon\": \"mdi:numeric-2\"\n}",
+        "output": "json",
+        "x": 520,
+        "y": 660,
+        "wires": [
+            [
+                "3d948f9e2b9234ab"
+            ]
+        ]
+    },
+    {
+        "id": "3d948f9e2b9234ab",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/sensor/p1_energyl2/config",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 820,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "428b35fdf9772a48",
+        "type": "rbe",
+        "z": "a3cc669196930997",
+        "name": "Effekt Uttag",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "d7fe54d54dd863de",
+                "8285fbd165ab40de"
+            ]
+        ]
+    },
+    {
+        "id": "d7fe54d54dd863de",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "Effekt uttag int",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{ payload.value }}",
+        "output": "json",
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "702b380f5162c06c",
+                "f954f25718c29f94"
+            ]
+        ]
+    },
+    {
+        "id": "f954f25718c29f94",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "p1/energy/effekt_uttag",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 860,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "dd532a620b6456da",
+        "type": "template",
+        "z": "a3cc669196930997",
+        "name": "Effekt Uttag config",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"device\": {\n        \"identifiers\": [\n        \"landisenergy\"\n        ],\n        \"name\": \"Energy Meter\", \n        \"manufacturer\": \"Landis+Gyr\",\n        \"model\": \"Node red flow\",\n        \"sw_version\": \"2.0\"\n    },  \n    \"device_class\": \"power\",\n    \"state_class\": \"measurement\",\n    \"name\": \"Energy Effekt Uttag\",\n    \"state_topic\": \"p1/energy/effekt_uttag\",\n    \"unit_of_measurement\": \"kW\",\n    \"unique_id\": \"energytotalpower\",\n    \"platform\": \"mqtt\",\n    \"icon\": \"mdi:transmission-tower\"\n}",
+        "output": "json",
+        "x": 550,
+        "y": 740,
+        "wires": [
+            [
+                "f6b5d2fe8eca95da"
+            ]
+        ]
+    },
+    {
+        "id": "f6b5d2fe8eca95da",
+        "type": "mqtt out",
+        "z": "a3cc669196930997",
+        "name": "",
+        "topic": "homeassistant/sensor/p1_energyeffekt_uttag/config",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 850,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "702b380f5162c06c",
+        "type": "debug",
+        "z": "a3cc669196930997",
+        "name": "effekt",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "447f5ca42424e0cd",
+        "type": "comment",
+        "z": "a3cc669196930997",
+        "name": "MQTT Autodiscovery",
+        "info": "",
+        "x": 550,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1fbb9e5cfc36d45d",
+        "type": "change",
+        "z": "a3cc669196930997",
+        "d": true,
+        "name": "L1 W",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.value*1000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c59bc2c9bc26b10e",
+        "type": "change",
+        "z": "a3cc669196930997",
+        "d": true,
+        "name": "L2 W",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.value*1000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a3f048e24107266",
+        "type": "change",
+        "z": "a3cc669196930997",
+        "d": true,
+        "name": "L3 W",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.value*1000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8285fbd165ab40de",
+        "type": "change",
+        "z": "a3cc669196930997",
+        "d": true,
+        "name": "Total W",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.value*1000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff42d91d6f6425e2",
+        "type": "split",
+        "z": "a3cc669196930997",
+        "name": "Split each value",
+        "splt": "1-",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": true,
+        "addname": "",
+        "x": 300,
+        "y": 40,
+        "wires": [
+            [
+                "bebabd5eb3d10c26"
+            ]
+        ]
+    },
+    {
+        "id": "c33b067fa54cc0d6",
+        "type": "serial in",
+        "z": "a3cc669196930997",
+        "name": "P1  HAN port",
+        "serial": "700783a1e7e1da72",
+        "x": 110,
+        "y": 40,
+        "wires": [
+            [
+                "ff42d91d6f6425e2"
+            ]
+        ]
+    },
+    {
+        "id": "26516bc9a19c6fd2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "${MQTT_Server}",
+        "port": "${MQTT_Server_Port}",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "700783a1e7e1da72",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    }
+]

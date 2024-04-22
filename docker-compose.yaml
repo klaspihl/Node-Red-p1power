@@ -1,0 +1,10 @@
+services:
+  nodered:
+    image: klaspihl/node-red-p1power:latest
+    environment:
+      - MQTT_Server=mqtt.dev.local
+      - MQTT_Server_Port=1883
+    ports:
+      - "1880:1880"
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
