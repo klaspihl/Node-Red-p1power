@@ -1,11 +1,821 @@
 [
     {
+        "id": "dad4465070f351d8",
+        "type": "tab",
+        "label": "P1 endpoint",
+        "disabled": false,
+        "info": "Working flow to read P1 port\r\n2023-06-20",
+        "env": []
+    },
+    {
         "id": "a3cc669196930997",
         "type": "tab",
         "label": "P1 MQTT",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "26516bc9a19c6fd2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "700783a1e7e1da72",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "136eed683eee8946",
+        "type": "debug",
+        "z": "dad4465070f351d8",
+        "name": "debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "17eabf387b8f43a6",
+        "type": "exec",
+        "z": "dad4465070f351d8",
+        "d": true,
+        "command": "pwsh -File /var/p1/convert-P1json.ps1",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "20",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Script parse output",
+        "x": 510,
+        "y": 520,
+        "wires": [
+            [
+                "4a8390836dfd1d2a",
+                "136eed683eee8946"
+            ],
+            [
+                "136eed683eee8946"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c6299780f3076d34",
+        "type": "template",
+        "z": "dad4465070f351d8",
+        "d": true,
+        "name": "Format string output",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"{{payload}}\"",
+        "output": "str",
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "17eabf387b8f43a6"
+            ]
+        ]
+    },
+    {
+        "id": "4a8390836dfd1d2a",
+        "type": "json",
+        "z": "dad4465070f351d8",
+        "name": "Create object data",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 750,
+        "y": 520,
+        "wires": [
+            [
+                "db6c43a71484d9fb"
+            ]
+        ]
+    },
+    {
+        "id": "3abff207af3ac848",
+        "type": "http in",
+        "z": "dad4465070f351d8",
+        "name": "Endpoint p1",
+        "url": "/p1",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "f3c801b2595b0363"
+            ]
+        ]
+    },
+    {
+        "id": "7786b0232ef37210",
+        "type": "http response",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "x": 490,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "db6c43a71484d9fb",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "p1data",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 980,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3c801b2595b0363",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "p1data",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 400,
+        "wires": [
+            [
+                "7786b0232ef37210"
+            ]
+        ]
+    },
+    {
+        "id": "aad6b847f6749a57",
+        "type": "comment",
+        "z": "dad4465070f351d8",
+        "name": "API endpoint",
+        "info": "",
+        "x": 90,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "77c1e2f57b91bcfb",
+        "type": "comment",
+        "z": "dad4465070f351d8",
+        "name": "Serial data to object",
+        "info": "",
+        "x": 110,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f75b14763dabde9d",
+        "type": "debug",
+        "z": "dad4465070f351d8",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "6d4618d07a5c80f0",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:1.8.0",
+                "fromt": "str",
+                "to": "Uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:2.8.0",
+                "fromt": "str",
+                "to": "Inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:3.8.0",
+                "fromt": "str",
+                "to": "Reaktiv uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:4.8.0",
+                "fromt": "str",
+                "to": "Reaktiv inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:1.7.0",
+                "fromt": "str",
+                "to": "Effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:2.7.0",
+                "fromt": "str",
+                "to": "Effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:3.7.0",
+                "fromt": "str",
+                "to": "Reaktiv effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:4.7.0",
+                "fromt": "str",
+                "to": "Reaktiv effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:21.7.0",
+                "fromt": "str",
+                "to": "L1 Effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:22.7.0",
+                "fromt": "str",
+                "to": "L1 Effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:41.7.0",
+                "fromt": "str",
+                "to": "L2 Effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:42.7.0",
+                "fromt": "str",
+                "to": "L2 Effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:61.7.0",
+                "fromt": "str",
+                "to": "L3 Effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:62.7.0",
+                "fromt": "str",
+                "to": "L3 Effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:32.7.0",
+                "fromt": "str",
+                "to": "L1 Fasspänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:52.7.0",
+                "fromt": "str",
+                "to": "L2 Fasspänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:72.7.0",
+                "fromt": "str",
+                "to": "L3 Fasspänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:31.7.0",
+                "fromt": "str",
+                "to": "L1 Ström",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:51.7.0",
+                "fromt": "str",
+                "to": "L2 Ström",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:71.7.0",
+                "fromt": "str",
+                "to": "L3 Ström",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:13.7.0",
+                "fromt": "str",
+                "to": "L1 Spänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:23.7.0",
+                "fromt": "str",
+                "to": "L2 Spänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:33.7.0",
+                "fromt": "str",
+                "to": "L3 Spänning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:24.7.0",
+                "fromt": "str",
+                "to": "L1 Reaktiv effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:44.7.0",
+                "fromt": "str",
+                "to": "L2 Reaktiv effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:54.7.0",
+                "fromt": "str",
+                "to": "L3 Reaktiv effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:64.7.0",
+                "fromt": "str",
+                "to": "L3 Reaktiv effekt inmatning",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:43.7.0",
+                "fromt": "str",
+                "to": "L2 Reaktiv effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0:63.7.0",
+                "fromt": "str",
+                "to": "L3 Reaktiv effekt uttag",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "/[A-Za-z0-9]+\\s+",
+                "fromt": "re",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0-0:1.0.0",
+                "fromt": "str",
+                "to": "DateTime",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 760,
+        "wires": [
+            [
+                "90894aaf0da6b95f"
+            ]
+        ]
+    },
+    {
+        "id": "019fabd7ce5b807a",
+        "type": "split",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "splt": "1-",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": true,
+        "addname": "",
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "6d4618d07a5c80f0",
+                "3faa1737fe0baf06",
+                "820c4eb5b45e453f"
+            ]
+        ]
+    },
+    {
+        "id": "90894aaf0da6b95f",
+        "type": "function",
+        "z": "dad4465070f351d8",
+        "name": "function 1",
+        "func": "const regex = /\\(|\\*|\\)/gm;\nconst str = msg.payload;\nconst result = str.split(regex);\nconst output = { \n    value: parseFloat(result[1]),\n    unit: result[2] \n};\nreturn { \n    payload: output,\n    topic: [result[0]]\n    }\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 900,
+        "wires": [
+            [
+                "22731d9d9cd473a4"
+            ]
+        ]
+    },
+    {
+        "id": "22731d9d9cd473a4",
+        "type": "join",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 310,
+        "y": 900,
+        "wires": [
+            [
+                "f75b14763dabde9d",
+                "ad6a76c23b4c2702",
+                "58607e2d35e8d1d1"
+            ]
+        ]
+    },
+    {
+        "id": "b830cb1e76bce1b5",
+        "type": "http in",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "url": "/power",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 680,
+        "wires": [
+            [
+                "e17510585f1348b6"
+            ]
+        ]
+    },
+    {
+        "id": "4b956931158740ab",
+        "type": "http response",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 530,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ad6a76c23b4c2702",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "p1",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e17510585f1348b6",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "p1",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 680,
+        "wires": [
+            [
+                "4b956931158740ab"
+            ]
+        ]
+    },
+    {
+        "id": "58607e2d35e8d1d1",
+        "type": "mqtt out",
+        "z": "dad4465070f351d8",
+        "name": "",
+        "topic": "power/p1",
+        "qos": "",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26516bc9a19c6fd2",
+        "x": 520,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "2288b6e5504d031a",
+        "type": "change",
+        "z": "dad4465070f351d8",
+        "d": true,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$now()",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 120,
+        "y": 1000,
+        "wires": [
+            [
+                "2c53a059b4c5abb8"
+            ]
+        ]
+    },
+    {
+        "id": "2c53a059b4c5abb8",
+        "type": "template",
+        "z": "dad4465070f351d8",
+        "d": true,
+        "name": "DateTimeObject",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"Timestamp\": \"{{ payload }}\"\n}",
+        "output": "json",
+        "x": 320,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3faa1737fe0baf06",
+        "type": "link out",
+        "z": "dad4465070f351d8",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "6834401ebed62d72"
+        ],
+        "x": 405,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "68a59d7671590b82",
+        "type": "serial in",
+        "z": "dad4465070f351d8",
+        "d": true,
+        "name": "P1",
+        "serial": "700783a1e7e1da72",
+        "x": 70,
+        "y": 520,
+        "wires": [
+            [
+                "c6299780f3076d34",
+                "136eed683eee8946",
+                "019fabd7ce5b807a"
+            ]
+        ]
+    },
+    {
+        "id": "820c4eb5b45e453f",
+        "type": "debug",
+        "z": "dad4465070f351d8",
+        "name": "split",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 220,
+        "wires": []
     },
     {
         "id": "63f43d3fc3fee918",
@@ -881,53 +1691,5 @@
                 "ff42d91d6f6425e2"
             ]
         ]
-    },
-    {
-        "id": "26516bc9a19c6fd2",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "${MQTT_Server}",
-        "port": "${MQTT_Server_Port}",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "3",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "700783a1e7e1da72",
-        "type": "serial-port",
-        "name": "",
-        "serialport": "/dev/ttyUSB0",
-        "serialbaud": "115200",
-        "databits": "8",
-        "parity": "none",
-        "stopbits": "1",
-        "waitfor": "",
-        "dtr": "none",
-        "rts": "none",
-        "cts": "none",
-        "dsr": "none",
-        "newline": "\\n",
-        "bin": "false",
-        "out": "char",
-        "addchar": "",
-        "responsetimeout": "10000"
     }
 ]
