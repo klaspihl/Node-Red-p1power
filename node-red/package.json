@@ -4,9 +4,8 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
-        "node-red-node-serialport": "~2.0.2",
-        "node-red": "^3.1.9",
-        "node-red-dashboard" : "^3.6.5"
+        "node-red-node-serialport": "~2.0.3",
+        "node-red": "^4.0.8"
     },
     "scripts": {
         "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
